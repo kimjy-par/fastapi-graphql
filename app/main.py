@@ -3,14 +3,8 @@ import strawberry
 from fastapi import FastAPI
 from strawberry.fastapi import GraphQLRouter
 from starlette.middleware.cors import CORSMiddleware
-
+from app.schemas.user import User
 authors: list[str] = []
-
-@strawberry.type
-class User:
-    name: str
-    age: int
-
 @strawberry.type
 class Query():
     @strawberry.field
@@ -36,8 +30,5 @@ schema = strawberry.Schema(query=Query, mutation=Mutation)
 graphql_app = GraphQLRouter(schema)
 
 app = FastAPI()
-@app.get('/')
-def read_root():
-    return 'hello FastAPI & GraphQL'
 
 app.include_router(graphql_app, prefix="/graphql")
