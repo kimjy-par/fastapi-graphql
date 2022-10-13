@@ -1,19 +1,25 @@
 from dependency_injector import containers, providers
 from fastapi import Depends
+from strawberry.fastapi import BaseContext
 
-from app.services.test_service import my_class
-from app.routers.query import authors
+from app.models.model import Model
 
-class Container(containers.DeclarativeContainer):
-    wiring_config = containers.WiringConfiguration(
-        modules=[
-            'app.routers.mutation',
-        ]
-    )
+model = Model()
 
+class CustomContext(BaseContext):
+    def __init__(self, greeting: str, name: str,
+                 model: Model=model
+    ):
+        self.greeting = greeting
+        self.name = name
+        self.model = model
 
-async def get_context(
-    custom_context=Depends(my_class.custom_context_dependency)
+def custom_context():
+    return CustomContext(greeting='hello', name='jacob')
+
+async def context_container(
+    custom_context=Depends(custom_context)
 ):
+    custom_context
     return custom_context
 
