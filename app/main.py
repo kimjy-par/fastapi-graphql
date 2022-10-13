@@ -6,6 +6,7 @@ from starlette.middleware.cors import CORSMiddleware
 from app.routers.router import graphql_app
 from app.core.container import Container
 from app.services.author_service import AuthorService
+
 app = FastAPI()
 app.container = Container()
 app.include_router(graphql_app, prefix="/graphql")
