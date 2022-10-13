@@ -1,5 +1,7 @@
 from dependency_injector import containers, providers
-from app.services.author_service import AuthorService
+from fastapi import Depends
+
+from app.services.test_service import my_class
 from app.routers.query import authors
 
 class Container(containers.DeclarativeContainer):
@@ -9,4 +11,9 @@ class Container(containers.DeclarativeContainer):
         ]
     )
 
-    author_service = providers.Factory(AuthorService)
+
+async def get_context(
+    custom_context=Depends(my_class.custom_context_dependency)
+):
+    return custom_context
+

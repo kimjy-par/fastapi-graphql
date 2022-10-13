@@ -5,7 +5,6 @@ from fastapi import Depends
 from starlette.middleware.cors import CORSMiddleware
 from app.routers.router import graphql_app
 from app.core.container import Container
-from app.services.author_service import AuthorService
 
 app = FastAPI()
 app.container = Container()

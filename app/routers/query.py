@@ -4,26 +4,20 @@ from typing import List
 from fastapi import Depends
 from strawberry.types import Info
 from app.schemas.user import User
+from app.services.test_service import CustomContext
 
 authors: List[str] = []
 
-def custom_context_dependency() -> str:
-    return "John"
-
-async def get_context(
-    custom_value = Depends(custom_context_dependency)
-):
-    return{
-        "custom_value": custom_value,
-    }
 
 
 @strawberry.type
 class Query:
 
     @strawberry.field(name="di_test")
-    def di_test(self, info: Info) -> str:
-        return f"hello {info.context['custom_value']}"
+    def di_test(self) -> User:
+        #print((info.context.greeting))
+        user = User(name="hello", age=100)
+        return user
     @strawberry.field(name='fil')
     def all_authors(self) -> List[str]:
         return authors

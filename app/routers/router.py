@@ -2,7 +2,8 @@ import strawberry
 
 from strawberry.fastapi import GraphQLRouter
 from app.routers.query import Query
-from app.routers.mutation import Mutation, get_context
+from app.routers.mutation import Mutation
+from app.core.container import get_context
 
 query = Query()
 mutation = Mutation()
